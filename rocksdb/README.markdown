@@ -7,16 +7,17 @@
     cd boost_1_48_0
     ./bootstrap.sh --prefix=/usr/local
     sudo ./b2 install 
+### RocksDB
+    
+    git clone https://github.com/facebook/rocksdb.git
+    cd rocksdb
+    make static_lib 
 
-### LevelDB
+    sudo cp --preserve=links libleveldb.* /usr/local/lib
+    sudo cp -r include/leveldb /usr/local/include/
+    sudo ldconfig 
 
-    svn checkout http://leveldb.googlecode.com/svn/trunk/ leveldb-read-only
-    cd leveldb-read-only/
-    make
-    sudo cp libleveldb.a /usr/local/lib
-    sudo cp -r include/leveldb /usr/local/include
-
-## Running LevelDB MapKeeper Server
+## Running RocksDB MapKeeper Server
 
 After installing all the dependencies, run:
 
@@ -24,9 +25,9 @@ After installing all the dependencies, run:
 
 to compile. To start the server, execute the command:
 
-    ./mapkeeper_leveldb
+    ./mapkeeper_rocksdb
 
-You can see the complete list of available options by passing `-h` to `mapkeeper_leveldb` 
+You can see the complete list of available options by passing `-h` to `mapkeeper_rocksdb` 
 command.
   
 ## Configuration Parameters
@@ -60,6 +61,5 @@ and longer recovery time during startup. Default to 1024MB.
 Block Cache size in megabytes (default to 1024MB). Again, bigger the better.
 
 ## Related Pages
-
-* [Official LevelDB Documentation](http://leveldb.googlecode.com/svn/trunk/doc/index.html)
-* [LevelDB Tuning Tips by Basho](http://wiki.basho.com/LevelDB.html)
+*  https://github.com/facebook/rocksdb
+* https://github.com/facebook/rocksdb/wiki
